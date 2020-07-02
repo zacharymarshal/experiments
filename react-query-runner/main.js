@@ -66,14 +66,24 @@ function Stmts(props) {
     setIsInsertMode();
   }
 
+  function updateStmt(stmtIdx, {value, selectionEnd}) {
+    const newStmts = [...stmts];
+    newStmts[stmtIdx].sql = value;
+    newStmts[stmtIdx].selectionEnd = selectionEnd;
+    setStmts(newStmts);
+  }
+
   useEffect(() => {
     Mousetrap.bind(['down', 'j'], () => selectNextStmt());
     Mousetrap.bind(['up', 'k'], () => selectPrevStmt());
     Mousetrap.bind(['d'], () => deleteStmt());
     Mousetrap.bind(['o'], () => addStmt('after'));
     Mousetrap.bind(['O'], () => addStmt('before'));
-    Mousetrap.bind(['i', 'enter'], () => setIsInsertMode());
-    Mousetrap.bind(['esc'], () => setIsNormalMode());
+    Mousetrap.bind(['i', 'enter'], () => {
+      setIsInsertMode();
+      return false;
+    });
+    Mousetrap.bindGlobal(['esc'], () => setIsNormalMode());
 
     return () => {
       Mousetrap.unbind(['down', 'j']);
@@ -81,13 +91,13 @@ function Stmts(props) {
     };
   });
 
-
   const stmtsEl = stmts.map((stmt, idx) => {
     const isActive = idx === activeStmtIdx;
     return e(Stmt, {
       stmtIdx: idx,
       isActive: isActive,
       isEditing: isInsertMode && isActive,
+      updateStmt,
       ...stmt
     });
   });
@@ -100,19 +110,58 @@ function Stmts(props) {
 }
 
 function Stmt(props) {
-    let cssClass = 'stmt';
-    if (props.isActive) {
-      cssClass += ' stmt--active';
-    }
-    if (props.isEditing) {
-      cssClass += ' stmt--editing';
-    }
+  const sql = props.sql;
 
-    return e(
-      'div',
-      { className: cssClass },
-      'idx: ', props.stmtIdx, ' sql: ', props.sql
-    );
+  let cssClass = 'stmt';
+  if (props.isActive) {
+    cssClass += ' stmt--active';
+  }
+  if (props.isEditing) {
+    cssClass += ' stmt--editing';
+  }
+
+  let sqlEl = e('pre', null, sql);
+  if (props.isEditing) {
+    sqlEl = e(Editor, {
+      sql,
+      selectionEnd: props.selectionEnd,
+      onEditorChange: props.updateStmt.bind(null, props.stmtIdx),
+    });
+  }
+
+  return e(
+    'div',
+    { className: cssClass },
+    sqlEl
+  );
+}
+
+function Editor(props) {
+  let textarea;
+  useEffect(() => {
+    textarea.focus();
+    if (props.selectionEnd) {
+      textarea.setSelectionRange(props.selectionEnd, props.selectionEnd);
+    }
+    const editor = new SQLEditor(textarea);
+    editor.initialize();
+
+    return () => {
+      editor.dispose()
+    };
+  }, [true]);
+
+  const handleChange = (e) => {
+    const {value, selectionEnd} = e.target;
+    props.onEditorChange({value, selectionEnd});
+  };
+  return e('textarea', {
+    rows: 1,
+    value: props.sql,
+    ref: (input) => textarea = input,
+    onChange: handleChange,
+    onKeyUp: handleChange,
+  });
 }
 
 ReactDOM.render(
