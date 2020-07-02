@@ -88,6 +88,11 @@ function Stmts(props) {
     return () => {
       Mousetrap.unbind(['down', 'j']);
       Mousetrap.unbind(['up', 'k']);
+      Mousetrap.unbind(['d']);
+      Mousetrap.unbind(['o']);
+      Mousetrap.unbind(['O']);
+      Mousetrap.unbind(['i', 'enter']);
+      Mousetrap.unbind(['esc']);
     };
   });
 
