@@ -1,0 +1,11 @@
+.stmt {
+  border: 1px solid transparent;
+  border-left: 4px solid transparent;
+  padding: 1em;
+}
+.stmt--active {
+  border-color: #E0BAD7;
+}
+.stmt--editing {
+  border-color: #48BF84;
+}
