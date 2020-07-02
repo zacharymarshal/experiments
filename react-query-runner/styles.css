@@ -12,10 +12,10 @@
 }
 .stmt textarea, .stmt pre {
   background: inherit;
-  border: 1px solid transparent;
+  border: 0;
   color: inherit;
   font: 400 1rem "monaco", "menlo", "consolas", "inconsolata", monospace;
-  padding: 4px;
+  padding: 0;
   resize: none;
   tab-size: 1rem;
   width: 100%;
@@ -24,4 +24,7 @@
 }
 .stmt textarea:focus {
   outline: 0;
+}
+.stmt pre {
+  margin-bottom: 4px;
 }
