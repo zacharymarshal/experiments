@@ -15,10 +15,6 @@ function Stmts(props) {
   const setIsInsertMode = () => setMode('insert');
 
   function selectNextStmt() {
-    if (!isNormalMode) {
-      return;
-    }
-
     let nextStmtIdx = activeStmtIdx + 1;
     if (nextStmtIdx === stmts.length) {
       return;
@@ -27,10 +23,6 @@ function Stmts(props) {
   }
 
   function selectPrevStmt() {
-    if (!isNormalMode) {
-      return;
-    }
-
     let prevStmtIdx = activeStmtIdx - 1;
     if (prevStmtIdx === -1) {
       return;
@@ -39,10 +31,6 @@ function Stmts(props) {
   }
 
   function deleteStmt() {
-    if (!isNormalMode) {
-      return;
-    }
-
     const newStmts = [...stmts];
     if (newStmts.length === 1) {
       return;
@@ -117,6 +105,14 @@ function Stmts(props) {
       setIsNormalMode,
       sql: stmt.sql || '',
       cursor: stmt.cursor || 0,
+      editPrevStmt: () => {
+        selectPrevStmt();
+        setIsInsertMode();
+      },
+      editNextStmt: () => {
+        selectNextStmt();
+        setIsInsertMode();
+      },
     });
   });
 
@@ -135,6 +131,8 @@ function Stmt(props) {
     sql,
     stmtIdx,
     editStmt,
+    editPrevStmt,
+    editNextStmt,
     setIsNormalMode,
     updateStmtSql,
     updateStmtCursor,
@@ -155,7 +153,17 @@ function Stmt(props) {
       cursor,
       onSqlChange: sql => updateStmtSql(stmtIdx, sql),
       onCursorChange: cursor => updateStmtCursor(stmtIdx, cursor),
-      onExit: () => setIsNormalMode(),
+      onExit: dir => {
+        if (dir === 'up') {
+          editPrevStmt();
+          return;
+        } else if (dir === 'down') {
+          editNextStmt();
+          return;
+        }
+
+        setIsNormalMode();
+      },
     });
   } else if (sql) {
     const hlSql = hljs.highlight('pgsql', sql, true);
@@ -191,6 +199,20 @@ function Editor(props) {
 
     const m = new Mousetrap(textarea);
     m.bind('esc', e => e.target.blur() && false);
+    m.bind('up', e => {
+      if (e.target.selectionStart !== 0) {
+        return;
+      }
+      e.preventDefault();
+      onExit('up');
+    });
+    m.bind('down', e => {
+      if (e.target.selectionStart !== e.target.value.length) {
+        return;
+      }
+      e.preventDefault();
+      onExit('down');
+    });
 
     return () => {
       editor.dispose();
@@ -212,7 +234,7 @@ function Editor(props) {
       e.stopPropagation();
       handleCursorChange(e);
     },
-    onBlur: onExit,
+    onBlur: () => onExit(),
   });
 }
 
