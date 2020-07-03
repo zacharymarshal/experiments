@@ -67,10 +67,15 @@ function Stmts(props) {
     setIsInsertMode();
   }
 
-  function updateStmt(stmtIdx, {value, selectionEnd}) {
+  function updateStmtSql(stmtIdx, sql) {
     const newStmts = [...stmts];
-    newStmts[stmtIdx].sql = value;
-    newStmts[stmtIdx].selectionEnd = selectionEnd;
+    newStmts[stmtIdx].sql = sql;
+    setStmts(newStmts);
+  }
+
+  function updateStmtCursor(stmtIdx, cursor) {
+    const newStmts = [...stmts];
+    newStmts[stmtIdx].cursor = cursor;
     setStmts(newStmts);
   }
 
@@ -84,7 +89,6 @@ function Stmts(props) {
       setIsInsertMode();
       return false;
     });
-    Mousetrap.bindGlobal(['esc'], () => setIsNormalMode());
 
     return () => {
       Mousetrap.unbind(['down', 'j']);
@@ -93,7 +97,6 @@ function Stmts(props) {
       Mousetrap.unbind(['o']);
       Mousetrap.unbind(['O']);
       Mousetrap.unbind(['i', 'enter']);
-      Mousetrap.unbind(['esc']);
     };
   });
 
@@ -103,8 +106,11 @@ function Stmts(props) {
       stmtIdx: idx,
       isActive: isActive,
       isEditing: isInsertMode && isActive,
-      updateStmt,
-      ...stmt
+      updateStmtSql,
+      updateStmtCursor,
+      setIsNormalMode,
+      sql: stmt.sql || '',
+      cursor: stmt.cursor || 0,
     });
   });
 
@@ -116,22 +122,33 @@ function Stmts(props) {
 }
 
 function Stmt(props) {
-  const sql = props.sql;
+  const {
+    cursor,
+    isActive,
+    isEditing,
+    sql,
+    stmtIdx,
+    setIsNormalMode,
+    updateStmtSql,
+    updateStmtCursor,
+  } = props;
 
   let cssClass = 'stmt';
-  if (props.isActive) {
+  if (isActive) {
     cssClass += ' stmt--active';
   }
-  if (props.isEditing) {
+  if (isEditing) {
     cssClass += ' stmt--editing';
   }
 
   let sqlEl;
-  if (props.isEditing) {
+  if (isEditing) {
     sqlEl = e(Editor, {
       sql,
-      selectionEnd: props.selectionEnd,
-      onEditorChange: props.updateStmt.bind(null, props.stmtIdx),
+      cursor,
+      onSqlChange: sql => updateStmtSql(stmtIdx, sql),
+      onCursorChange: cursor => updateStmtCursor(stmtIdx, cursor),
+      onExit: () => setIsNormalMode(),
     });
   } else if (sql) {
     const hlSql = hljs.highlight('pgsql', sql, true);
@@ -142,38 +159,47 @@ function Stmt(props) {
     sqlEl = e('pre', null, ' ');
   }
 
-  return e(
-    'div',
-    { className: cssClass },
-    sqlEl
-  );
+  return e('div', {className: cssClass}, sqlEl);
 }
 
 function Editor(props) {
+  const {
+    cursor,
+    sql,
+    onCursorChange,
+    onExit,
+    onSqlChange,
+  } = props;
+
   let textarea;
   useLayoutEffect(() => {
     textarea.focus();
-    if (props.selectionEnd) {
-      textarea.setSelectionRange(props.selectionEnd, props.selectionEnd);
-    }
+    textarea.setSelectionRange(cursor, cursor);
+
     const editor = new SQLEditor(textarea);
     editor.initialize();
 
+    const m = new Mousetrap(textarea);
+    m.bind('esc', e => e.target.blur() && false);
+
     return () => {
-      editor.dispose()
+      editor.dispose();
+      m.unbind('esc');
     };
   }, [true]);
 
-  const handleChange = (e) => {
-    const {value, selectionEnd} = e.target;
-    props.onEditorChange({value, selectionEnd});
-  };
+  function handleCursorChange(e) {
+    onCursorChange(e.target.selectionEnd);
+  }
+
   return e('textarea', {
     rows: 1,
-    value: props.sql,
+    value: sql,
     ref: (input) => textarea = input,
-    onChange: handleChange,
-    onKeyUp: handleChange,
+    onChange: e => onSqlChange(e.target.value),
+    onKeyUp: handleCursorChange,
+    onClick: handleCursorChange,
+    onBlur: onExit,
   });
 }
 
@@ -181,7 +207,7 @@ ReactDOM.render(
   e(Stmts, {
     stmts: [
       {sql: 'BEGIN;'},
-      {sql: 'SELECT 1'},
+      {sql: 'SELECT *\nFROM users\nWHERE organization_id = 32\n\tAND first_name ILIKE \'%zuuu%\''},
     ]
   }),
   document.getElementById('root')
