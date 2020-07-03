@@ -19,7 +19,7 @@ Attaches to the [buoy](https://github.com/lightster/buoy) network as
 ```
 # Serve the public/ via http-server
 docker-compose up
-``
+```
 
 ## Example
 
