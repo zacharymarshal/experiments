@@ -5,10 +5,10 @@
   margin: 0.5em 0;
 }
 .stmt--active {
-  border-color: #E0BAD7;
+  border-color: #1f96ff;
 }
 .stmt--editing {
-  border-color: #48BF84;
+  border-color: #40b557;
 }
 .stmt textarea, .stmt pre {
   background: inherit;

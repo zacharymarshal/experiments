@@ -125,13 +125,20 @@ function Stmt(props) {
     cssClass += ' stmt--editing';
   }
 
-  let sqlEl = e('pre', null, sql);
+  let sqlEl;
   if (props.isEditing) {
     sqlEl = e(Editor, {
       sql,
       selectionEnd: props.selectionEnd,
       onEditorChange: props.updateStmt.bind(null, props.stmtIdx),
     });
+  } else if (sql) {
+    const hlSql = hljs.highlight('pgsql', sql, true);
+    sqlEl = e('pre', {
+      dangerouslySetInnerHTML: {__html: hlSql.value},
+    });
+  } else {
+    sqlEl = e('pre', null, ' ');
   }
 
   return e(
