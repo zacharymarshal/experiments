@@ -76,8 +76,14 @@ function Stmts(props) {
     Mousetrap.bind(['down', 'j'], () => selectNextStmt());
     Mousetrap.bind(['up', 'k'], () => selectPrevStmt());
     Mousetrap.bind(['d'], () => deleteStmt());
-    Mousetrap.bind(['o'], () => addStmt('after'));
-    Mousetrap.bind(['O'], () => addStmt('before'));
+    Mousetrap.bind(['o'], e => {
+      e.preventDefault();
+      addStmt('after');
+    });
+    Mousetrap.bind(['O'], e => {
+      e.preventDefault();
+      addStmt('before');
+    });
     Mousetrap.bind(['i', 'enter'], () => {
       setIsInsertMode();
       return false;
