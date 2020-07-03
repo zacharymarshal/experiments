@@ -1,6 +1,7 @@
 const e = React.createElement;
 const useState = React.useState;
 const useEffect = React.useEffect;
+const useLayoutEffect = React.useLayoutEffect;
 
 function Stmts(props) {
   const [activeStmtIdx, setActiveStmtIdx] = useState(0);
@@ -150,7 +151,7 @@ function Stmt(props) {
 
 function Editor(props) {
   let textarea;
-  useEffect(() => {
+  useLayoutEffect(() => {
     textarea.focus();
     if (props.selectionEnd) {
       textarea.setSelectionRange(props.selectionEnd, props.selectionEnd);
