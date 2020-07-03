@@ -11,6 +11,10 @@ goals/technologies:
 - Docker
 - node [http-server](https://www.npmjs.com/package/http-server)
 
+## Example
+
+![](example.gif)
+
 ## Running
 
 Attaches to the [buoy](https://github.com/lightster/buoy) network as
@@ -20,7 +24,3 @@ Attaches to the [buoy](https://github.com/lightster/buoy) network as
 # Serve the public/ via http-server
 docker-compose up
 ```
-
-## Example
-
-![](example.gif)
