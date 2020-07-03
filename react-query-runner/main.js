@@ -79,6 +79,11 @@ function Stmts(props) {
     setStmts(newStmts);
   }
 
+  function editStmt(stmtIdx) {
+    setActiveStmtIdx(stmtIdx);
+    setIsInsertMode();
+  }
+
   useEffect(() => {
     Mousetrap.bind(['down', 'j'], () => selectNextStmt());
     Mousetrap.bind(['up', 'k'], () => selectPrevStmt());
@@ -106,6 +111,7 @@ function Stmts(props) {
       stmtIdx: idx,
       isActive: isActive,
       isEditing: isInsertMode && isActive,
+      editStmt,
       updateStmtSql,
       updateStmtCursor,
       setIsNormalMode,
@@ -128,6 +134,7 @@ function Stmt(props) {
     isEditing,
     sql,
     stmtIdx,
+    editStmt,
     setIsNormalMode,
     updateStmtSql,
     updateStmtCursor,
@@ -159,7 +166,10 @@ function Stmt(props) {
     sqlEl = e('pre', null, ' ');
   }
 
-  return e('div', {className: cssClass}, sqlEl);
+  return e('div', {
+    className: cssClass,
+    onClick: () => editStmt(stmtIdx),
+  }, sqlEl);
 }
 
 function Editor(props) {
@@ -198,7 +208,10 @@ function Editor(props) {
     ref: (input) => textarea = input,
     onChange: e => onSqlChange(e.target.value),
     onKeyUp: handleCursorChange,
-    onClick: handleCursorChange,
+    onClick: e => {
+      e.stopPropagation();
+      handleCursorChange(e);
+    },
     onBlur: onExit,
   });
 }
