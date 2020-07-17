@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  node:
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    ports:
+      - 80
+    networks:
+      default:
+      buoy:
+        aliases:
+          - exp-js-keymaps
+networks:
+  buoy:
+    external:
+      name: buoy
