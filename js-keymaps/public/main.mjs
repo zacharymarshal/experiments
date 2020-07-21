@@ -54,6 +54,7 @@ function handleKey(keymap, key) {
       bubbles: true,
       detail: {
         combo,
+        keyEvent: e,
       }
     });
 
@@ -94,9 +95,21 @@ keymap.add({
   selector: '.abort textarea',
   eventType: Keymap.ABORT,
 });
+keymap.add({
+  key: 'q',
+  selector: '.abort textarea',
+  eventType: 'q',
+});
+keymap.add({
+  key: 'o',
+  selector: '.abort textarea',
+  eventType: 'o',
+});
 
 window.addEventListener('app:cancel', e => {
   console.log('Cancelling something big!');
   console.log(e.detail);
 });
 window.addEventListener('txt:exit', e => e.target.blur());
+window.addEventListener('q', e => e.preventDefault());
+window.addEventListener('o', e => e.detail.keyEvent.preventDefault());
