@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  webserver:
+    build:
+      context: .
+      dockerfile: docker/webserver/Dockerfile
+    restart: "no"
+    volumes:
+      - .:/app
+    ports:
+      - 80
+    networks:
+      default:
+      buoy:
+        aliases:
+          - xp-tailwind-website
+  node:
+    image: node:lts
+    volumes:
+    - .:/www
+    restart: "no"
+    working_dir: /www
+    user: "${DOCKER_USER}"
+
+networks:
+  buoy:
+    external:
+      name: buoy
