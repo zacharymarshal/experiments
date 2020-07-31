@@ -1,0 +1,4 @@
+name: morose-hound
+description: Build Conway's game of life using p5.js
+tools:
+- p5.js
