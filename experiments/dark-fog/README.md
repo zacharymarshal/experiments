@@ -1,7 +1,8 @@
-# experiments/electron-sqlboss-commands
+# dark-fog
 
-Playing with sending commands from the main process to the render process. I
-like the idea of having a command palette to trigger commands.
+Send commands between Electron render and main process
+
+[electron](https://www.electronjs.org/)
 
 ## Goals
 

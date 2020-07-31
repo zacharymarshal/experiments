@@ -3,6 +3,7 @@ urls:
   js: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
   php: "http://php.net/"
   react: "https://reactjs.org/"
+  electron: "https://www.electronjs.org/"
 
 adjectives:
   - ageless

@@ -1,0 +1,4 @@
+name: dark-fog
+description: Send commands between Electron render and main process
+tools:
+- electron
