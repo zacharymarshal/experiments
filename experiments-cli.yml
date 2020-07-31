@@ -4,6 +4,7 @@ urls:
   php: "http://php.net/"
   react: "https://reactjs.org/"
   electron: "https://www.electronjs.org/"
+  tailwindcss: "https://tailwindcss.com"
 
 adjectives:
   - ageless

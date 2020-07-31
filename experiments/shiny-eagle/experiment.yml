@@ -1,0 +1,4 @@
+name: shiny-eagle
+description: Make a website with tailwind
+tools:
+- tailwindcss
