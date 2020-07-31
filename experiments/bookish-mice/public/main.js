@@ -1,4 +1,4 @@
-import Keymap from './keymap.mjs';
+import Keymap from './keymap.js';
 
 let mousetrap;
 const keymap = window.keymap = new Keymap({

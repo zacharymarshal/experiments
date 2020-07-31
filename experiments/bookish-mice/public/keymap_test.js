@@ -1,4 +1,4 @@
-import Keymap from './keymap.mjs';
+import Keymap from './keymap.js';
 
 QUnit.test('should call bindKey when adding a keybinding', assert => {
   assert.expect(2);
