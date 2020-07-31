@@ -1,0 +1,5 @@
+name: blurred-heart
+description: Recreate the SQLBoss query editor using React
+tools:
+- react
+- mousetrap

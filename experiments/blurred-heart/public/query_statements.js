@@ -1,4 +1,4 @@
-import QueryStatement from './query_statement.mjs';
+import QueryStatement from './query_statement.js';
 
 const e = React.createElement;
 const useState = React.useState;

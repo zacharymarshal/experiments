@@ -1,4 +1,4 @@
-import QueryStatementEditor from './query_statement_editor.mjs';
+import QueryStatementEditor from './query_statement_editor.js';
 
 const e = React.createElement;
 
