@@ -1,0 +1,5 @@
+name: bookish-mice
+description: Register keybindings to dom elements and dispatch a custom event
+tools:
+- js
+- mousetrap

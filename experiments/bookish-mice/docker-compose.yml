@@ -1,19 +1,18 @@
 version: '3.7'
 services:
-  node:
-    build:
-      context: .
-      dockerfile: docker/node/Dockerfile
-    restart: unless-stopped
+  nginx:
+    image: nginx:stable
+    restart: "no"
     volumes:
-      - .:/app
+      - ./public:/usr/share/nginx/html:ro
     ports:
       - 80
     networks:
       default:
       buoy:
         aliases:
-          - exp-js-keymaps
+          - bookish-mice
+
 networks:
   buoy:
     external:

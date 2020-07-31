@@ -1,6 +1,8 @@
-# experiments/js-keymaps
+# bookish-mice
 
-Experiment with registering keybindings to dom elements and dispatch a custom event.
+Register keybindings to dom elements and dispatch a custom event
+
+[js](https://developer.mozilla.org/en-US/docs/Web/JavaScript), mousetrap
 
 I want to register a keybinding (`esc`) to both a textarea and the body and
 have it dispatch a custom event that I can listen to, for example:
@@ -20,12 +22,3 @@ This is similar to Atom, and would give me a central location to manage
 keybindings. Eventually it would be cool to make a UI where you could search
 all registered keybindings, modify them, add new ones, etc.
 
-## Running
-
-Attaches to the [buoy](https://github.com/lightster/buoy) network as
-`exp-js-keymaps`.
-
-```
-# Serve the public/ via http-server
-docker-compose up
-```
