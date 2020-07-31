@@ -1,19 +1,17 @@
 version: '3.7'
 services:
-  webserver:
-    build:
-      context: .
-      dockerfile: docker/webserver/Dockerfile
+  nginx:
+    image: nginx:stable
     restart: "no"
     volumes:
-      - .:/app
+      - ./public:/usr/share/nginx/html:ro
     ports:
       - 80
     networks:
       default:
       buoy:
         aliases:
-          - xp-tailwind-website
+          - shiny-eagle
   node:
     image: node:lts
     volumes:
