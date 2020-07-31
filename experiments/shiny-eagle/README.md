@@ -6,3 +6,9 @@ Make a website with tailwind
 
 I am just trying to create a simple website, and figuring out how to create a
 nice workflow for processing the css using PostCSS.
+
+Build the styles.min.css using:
+
+```
+docker-compose run --rm node npm run build
+```
