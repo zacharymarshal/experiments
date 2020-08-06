@@ -1,0 +1,4 @@
+name: macho-supernova
+description: GoodReads books to YAML
+tools:
+- go
