@@ -23,11 +23,10 @@ This makes it so docker containers run as your user and not root.
 
 ## Experiments
 
-- [benign-cactus](./experiments/benign-cactus/README.md) - Experiment with React, Turbolinks and Web Components
-- [blurred-heart](./experiments/blurred-heart/README.md) - Recreate the SQLBoss query editor using React
-- [bookish-mice](./experiments/bookish-mice/README.md) - Register keybindings to dom elements and dispatch a custom event
-- [dark-fog](./experiments/dark-fog/README.md) - Send commands between Electron render and main process
-- [lawless-king](./experiments/lawless-king/README.md) - Copy &amp; paste between my mac and remote server
-- [macho-supernova](./experiments/macho-supernova/README.md) - GoodReads books to YAML
-- [morose-hound](./experiments/morose-hound/README.md) - Build Conway&apos;s game of life using p5.js
-- [shiny-eagle](./experiments/shiny-eagle/README.md) - Make a website with tailwind
+- [benign-cactus](./experiments/benign-cactus) - Experiment with React, Turbolinks and Web Components
+- [blurred-heart](./experiments/blurred-heart) - Recreate the SQLBoss query editor using React
+- [bookish-mice](./experiments/bookish-mice) - Register keybindings to dom elements and dispatch a custom event
+- [dark-fog](./experiments/dark-fog) - Send commands between Electron render and main process
+- [macho-supernova](./experiments/macho-supernova) - GoodReads books to YAML
+- [morose-hound](./experiments/morose-hound) - Build Conway&apos;s game of life using p5.js
+- [shiny-eagle](./experiments/shiny-eagle) - Make a website with tailwind

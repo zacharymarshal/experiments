@@ -24,5 +24,5 @@ This makes it so docker containers run as your user and not root.
 ## Experiments
 
 {{#each experiments}}
-- [{{Name}}](./experiments/{{Name}}/README.md) - {{Description}}
+- [{{Name}}](./experiments/{{Name}}) - {{Description}}
 {{/each}}
