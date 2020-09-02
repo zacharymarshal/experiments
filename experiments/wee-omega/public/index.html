@@ -1,0 +1,169 @@
+<html>
+<head>
+  <script type="module" src="/main.js"></script>
+  <style>
+html {
+  font-size: 62.5%;
+  font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;
+}
+body {
+  font-size: 1.4rem;
+}
+.test {
+  border: 1px solid grey;
+  margin: 24px;
+}
+
+.search, .clear-filters {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+}
+
+.container {
+  padding: 0.8rem 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+.search {
+  width: 100%;
+  min-width: 20rem;
+  border: none;
+  outline: none;
+  padding: 0;
+  flex: 1;
+  margin: 0;
+}
+.filter {
+  flex-shrink: 0;
+  padding: 0.8rem 1.4rem 0.8rem 1.6rem;
+  border-radius: 3.2rem;
+  background-color: #eee;
+}
+.filter:first-child {
+  margin-left: 0;
+}
+
+.filter, .search {
+  margin: .4rem .8rem .4rem 0;
+}
+
+.filter__remove {
+  position: relative;
+  display: inline-block;
+  text-indent: -99999px;
+  visibility: none;
+
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAyMSAyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0yLjU5Mi4wNDRsMTguMzY0IDE4LjM2NC0yLjU0OCAyLjU0OEwuMDQ0IDIuNTkyeiIvPjxwYXRoIGQ9Ik0wIDE4LjM2NEwxOC4zNjQgMGwyLjU0OCAyLjU0OEwyLjU0OCAyMC45MTJ6Ii8+PC9nPjwvc3ZnPg==);
+  background-size: 0.8rem;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  border: 0;
+  border-left: 1px solid #000;
+
+  cursor: pointer;
+
+  width: 2.4rem;
+  margin: 0 -0.4rem 0 0.8rem;
+}
+
+.clear-filters {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 0.8rem;
+}
+
+  </style>
+</head>
+<body>
+  <h1>the-filterbox-js</h1>
+  <hr>
+  <the-filterbox>
+    <the-filter name="first_name"
+      type="text" value="Z" label="First Name"></the-filter>
+    <the-filter name="last_name"
+      type="text" value="" label="Last Name"></the-filter>
+  </the-filterbox>
+
+  <hr>
+  <p></p>
+
+  <div class="test">
+    <div class="container">
+      <div class="filter">
+        First Name matches "Z"
+        <button class="filter__remove">Remove filter</button>
+      </div>
+      <div class="filter">
+        School: "Adams Elementary"
+        <button class="filter__remove">Remove filter</button>
+      </div>
+      <input type="text" class="search">
+      <button class="clear-filters">Clear Filters</button>
+    </div>
+  </div>
+
+  <div class="test" style="width: 400px; ">
+    <div class="container">
+      <div class="filter">
+        First Name matches "Z"
+        <button class="filter__remove">Remove filter</button>
+      </div>
+      <div class="filter">
+        School: "Adams Elementary"
+        <button class="filter__remove">Remove filter</button>
+      </div>
+      <input type="text" class="search">
+      <button class="clear-filters">Clear Filters</button>
+    </div>
+  </div>
+
+  <div class="test" style="width: 700px; ">
+    <div class="container">
+      <div class="filter">
+        First Name matches "Z"
+        <button class="filter__remove">Remove filter</button>
+      </div>
+      <div class="filter">
+        School: "Adams Elementary"
+        <button class="filter__remove">Remove filter</button>
+      </div>
+      <input type="text" class="search">
+      <button class="clear-filters">Clear Filters</button>
+    </div>
+  </div>
+
+  <div class="test" style="width: 600px; ">
+    <div class="container">
+      <div class="filter">
+        First Name matches "Z"
+        <button class="filter__remove">Remove filter</button>
+      </div>
+      <div class="filter">
+        School: "Adams Elementary"
+        <button class="filter__remove">Remove filter</button>
+      </div>
+      <input type="text" class="search">
+      <button class="clear-filters">Clear Filters</button>
+    </div>
+  </div>
+  <div class="test" style="width: 960px; ">
+    <div class="container">
+      <div class="filter">
+        First Name matches "Z"
+        <button class="filter__remove">Remove filter</button>
+      </div>
+      <div class="filter">
+        School: "Adams Elementary"
+        <button class="filter__remove">Remove filter</button>
+      </div>
+      <input type="text" class="search">
+      <button class="clear-filters">Clear Filters</button>
+    </div>
+  </div>
+</body>
+</html>
