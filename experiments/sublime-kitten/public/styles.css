@@ -1,0 +1,39 @@
+html {
+  font-size: 40px;
+}
+#root {
+  display: table;
+  margin: 0 auto;
+  padding: 1rem;
+}
+.tenframe-container {
+  display: flex;
+  margin-bottom: 1rem;
+}
+.tenframe {
+  display: flex;
+  margin-left: 1rem;
+}
+.tenframe:first-child {
+  margin-left: 0;
+}
+.frame {
+  display: flex;
+  flex-direction: column-reverse;
+  user-select: none;
+}
+.slot {
+  cursor: pointer;
+  border: 1px solid #000;
+  padding: .5rem;
+  text-align: center;
+}
+.circle {
+  background-color: transparent;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+}
+.circle--filled {
+  background-color: #000;
+}

@@ -1,0 +1,6 @@
+name: sublime-kitten
+description: ten-frame
+tools:
+  - js
+  - react
+  - rollup

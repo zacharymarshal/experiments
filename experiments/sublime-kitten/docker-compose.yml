@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  nginx:
+    image: nginx:stable
+    restart: "no"
+    volumes:
+      - ./public:/usr/share/nginx/html:ro
+    ports:
+      - 80
+    networks:
+      default:
+      buoy:
+        aliases:
+          - sublime-kitten
+  node:
+    image: node:latest
+    volumes:
+      - .:/www
+    restart: "no"
+    working_dir: /www
+    user: "${DOCKER_USER}"
+
+networks:
+  buoy:
+    external:
+      name: buoy
