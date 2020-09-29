@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import FrameElement from "./frame.js";
+import Frame from "./frame.js";
 
-class Frame {
+class Fr {
   constructor() {
     this.reset();
   }
@@ -42,10 +42,10 @@ class Frame {
 class TenFrame {
   static ten() {
     return new TenFrame([
-      new Frame(),
-      new Frame(),
-      new Frame(),
-      new Frame(),
+      new Fr(),
+      new Fr(),
+      new Fr(),
+      new Fr(),
     ]);
   }
   constructor(frames) {
@@ -76,75 +76,38 @@ const tenFrame = TenFrame.ten();
 
 function App(props) {
   const [frames, setFrames] = React.useState(tenFrame.frames);
-  const framesEl = React.createElement(
-    "div",
-    {
-      className: "tenframe",
-    },
-    React.createElement(FrameElement, {
-      frame: frames[0],
-      add: () => {
-        tenFrame.add(0);
-        setFrames([...tenFrame.frames]);
-      }
-    }),
-    React.createElement(FrameElement, {
-      frame: frames[1],
-      add: () => {
-        tenFrame.add(1);
-        setFrames([...tenFrame.frames]);
-      }
-    })
-  );
 
-  const frames2El = React.createElement(
-    "div",
-    {
-      className: "tenframe",
-    },
-    React.createElement(FrameElement, {
-      frame: frames[2],
-      add: () => {
-        tenFrame.add(2);
-        setFrames([...tenFrame.frames]);
-      }
-    }),
-    React.createElement(FrameElement, {
-      frame: frames[3],
-      add: () => {
-        tenFrame.add(3);
-        setFrames([...tenFrame.frames]);
-      }
-    })
-  );
-
-  const resetBtn = React.createElement("button", {
-    onClick: () => {
-      tenFrame.reset();
+  const add = (idx) => {
+    return () => {
+      tenFrame.add(idx);
       setFrames([...tenFrame.frames]);
-    }
-  }, "Reset");
+    };
+  };
+  const getFrame = (idx) => frames[idx];
+  const reset = () => {
+    tenFrame.reset();
+    setFrames([...tenFrame.frames]);
+  };
 
-  const total = React.createElement("div", null, tenFrame.total());
-
-  const framesContainer = React.createElement(
-    "div",
-    {className: "tenframe-container"},
-    framesEl,
-    frames2El,
-  );
-
-  return React.createElement(
-    React.Fragment,
-    null,
-    framesContainer,
-    resetBtn,
-    total,
+  return (
+    <React.Fragment>
+      <div class="total">{tenFrame.total()}</div>
+      <div className="tenframe-container">
+        <div className="tenframe">
+          <Frame frame={getFrame(0)} add={add(0)} />
+          <Frame frame={getFrame(1)} add={add(1)} />
+        </div>
+        <div className="tenframe">
+          <Frame frame={getFrame(2)} add={add(2)} />
+          <Frame frame={getFrame(3)} add={add(3)} />
+        </div>
+      </div>
+      <button onClick={reset}>Reset</button>
+    </React.Fragment>
   );
 }
 
-
 ReactDOM.render(
-  React.createElement(App),
+  <App />,
   document.getElementById("root")
 );

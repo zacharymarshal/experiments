@@ -1,7 +1,11 @@
-import { terser } from "rollup-plugin-terser";
+import pluginBabel from '@rollup/plugin-babel';
 
 const nodeEnv = process.env.NODE_ENV ? process.env.NODE_ENV : "production";
 const isProduction = nodeEnv === "production";
+
+const babel = () => {
+  return pluginBabel({babelHelpers: 'bundled'});
+};
 
 export default [
   {
@@ -16,7 +20,7 @@ export default [
         "react-dom": "ReactDOM",
       },
     },
-    plugins: [isProduction && terser()],
+    plugins: [babel()],
     external: ["mousetrap", "react", "react-dom"],
   },
 ];
