@@ -11,8 +11,12 @@ export default function (props) {
     },
   });
 
-  return React.createElement("div", {
-    style: { width: "100px", height: "100px" },
-    onClick: () => setIsFilled(isFilled ? false : true),
-  }, img);
+  return React.createElement(
+    "div",
+    {
+      style: { width: "100px", height: "100px" },
+      onClick: () => setIsFilled(isFilled ? false : true),
+    },
+    img
+  );
 }

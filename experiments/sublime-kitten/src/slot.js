@@ -5,7 +5,11 @@ export default function (props) {
     className: "circle" + (props.isFilled ? " circle--filled" : ""),
     dangerouslySetInnerHTML: { __html: "&nbsp;" },
   });
-  return React.createElement("div", {
-    className: "slot",
-  }, circle);
+  return React.createElement(
+    "div",
+    {
+      className: "slot",
+    },
+    circle
+  );
 }

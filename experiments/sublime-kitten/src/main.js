@@ -41,12 +41,7 @@ class Fr {
 
 class TenFrame {
   static ten() {
-    return new TenFrame([
-      new Fr(),
-      new Fr(),
-      new Fr(),
-      new Fr(),
-    ]);
+    return new TenFrame([new Fr(), new Fr(), new Fr(), new Fr()]);
   }
   constructor(frames) {
     this.frames = frames;
@@ -68,7 +63,7 @@ class TenFrame {
   }
 
   reset() {
-    this.frames.forEach(f => f.reset());
+    this.frames.forEach((f) => f.reset());
   }
 }
 
@@ -91,7 +86,7 @@ function App(props) {
 
   return (
     <React.Fragment>
-      <div class="total">{tenFrame.total()}</div>
+      <div className="total">{tenFrame.total()}</div>
       <div className="tenframe-container">
         <div className="tenframe">
           <Frame frame={getFrame(0)} add={add(0)} />
@@ -107,7 +102,4 @@ function App(props) {
   );
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById("root")
-);
+ReactDOM.render(<App />, document.getElementById("root"));

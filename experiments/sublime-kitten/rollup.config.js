@@ -1,10 +1,10 @@
-import pluginBabel from '@rollup/plugin-babel';
+import pluginBabel from "@rollup/plugin-babel";
 
 const nodeEnv = process.env.NODE_ENV ? process.env.NODE_ENV : "production";
 const isProduction = nodeEnv === "production";
 
 const babel = () => {
-  return pluginBabel({babelHelpers: 'bundled'});
+  return pluginBabel({ babelHelpers: "bundled" });
 };
 
 export default [

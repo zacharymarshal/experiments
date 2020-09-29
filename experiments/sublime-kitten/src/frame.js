@@ -7,7 +7,9 @@ export default function (props) {
 
   return (
     <div className="frame" onClick={props.add}>
-      {frame.slots.map(s => <Slot isFilled={s === 1} />)}
+      {frame.slots.map((s, idx) => (
+        <Slot key={idx} isFilled={s === 1} />
+      ))}
     </div>
   );
 }
