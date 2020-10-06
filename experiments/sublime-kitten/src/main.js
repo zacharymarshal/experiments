@@ -78,27 +78,41 @@ function App(props) {
       setFrames([...tenFrame.frames]);
     };
   };
+  const subtract = (idx) => {
+    return (e) => {
+      e.stopPropagation();
+      tenFrame.subtract(idx);
+      setFrames([...tenFrame.frames]);
+    };
+  };
   const getFrame = (idx) => frames[idx];
   const reset = () => {
     tenFrame.reset();
     setFrames([...tenFrame.frames]);
   };
 
+  const getTotal = (...idxs) => {
+    let total = 0;
+    idxs.forEach((idx) => {
+      total += frames[idx].amount;
+    });
+    return total;
+  };
+
   return (
-    <React.Fragment>
-      <div className="total">{tenFrame.total()}</div>
+    <>
       <div className="tenframe-container">
         <div className="tenframe">
-          <Frame frame={getFrame(0)} add={add(0)} />
-          <Frame frame={getFrame(1)} add={add(1)} />
+          <Frame frame={getFrame(0)} add={add(0)} subtract={subtract(0)} />
+          <Frame frame={getFrame(1)} add={add(1)} subtract={subtract(1)} />
         </div>
         <div className="tenframe">
-          <Frame frame={getFrame(2)} add={add(2)} />
-          <Frame frame={getFrame(3)} add={add(3)} />
+          <Frame frame={getFrame(2)} add={add(2)} subtract={subtract(2)} />
+          <Frame frame={getFrame(3)} add={add(3)} subtract={subtract(3)} />
         </div>
       </div>
       <button onClick={reset}>Reset</button>
-    </React.Fragment>
+    </>
   );
 }
 

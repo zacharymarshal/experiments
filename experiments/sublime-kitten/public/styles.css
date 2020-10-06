@@ -1,5 +1,9 @@
+* {
+  touch-action: manipulation;
+  /* disable double tap zooming */
+}
 html {
-  font-size: 40px;
+  font-size: 28px;
 }
 #root {
   display: table;
