@@ -15,12 +15,12 @@ export default [
       format: "iife",
       sourcemap: true,
       globals: {
-        mousetrap: "Mousetrap",
         react: "React",
         "react-dom": "ReactDOM",
+        "react-transition-group": "ReactTransitionGroup",
       },
     },
     plugins: [babel()],
-    external: ["mousetrap", "react", "react-dom"],
+    external: ["react", "react-dom", "react-transition-group"],
   },
 ];

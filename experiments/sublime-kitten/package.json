@@ -13,5 +13,7 @@
     "rollup": "^2.26.9",
     "rollup-plugin-terser": "^7.0.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "react-transition-group": "^4.4.1"
+  }
 }

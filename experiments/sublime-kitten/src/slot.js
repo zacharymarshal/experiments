@@ -1,15 +1,21 @@
 import * as React from "react";
+import { CSSTransition } from "react-transition-group";
 
 export default function (props) {
-  const circle = React.createElement("div", {
-    className: "circle" + (props.isFilled ? " circle--filled" : ""),
-    dangerouslySetInnerHTML: { __html: "&nbsp;" },
-  });
-  return React.createElement(
-    "div",
-    {
-      className: "slot",
-    },
-    circle
+  return (
+    <div className="slot">
+      <CSSTransition
+        in={props.isFilled}
+        timeout={{enter: 500, exit: 250}}
+        classNames="circle"
+      >
+        <div
+          className={props.isFilled ? "circle circle--filled" : "circle"}
+          style={{ backgroundColor: props.color, opacity: props.isRemoved ? 0.25 : 1 }}
+        >
+          &nbsp;
+        </div>
+      </CSSTransition>
+    </div>
   );
 }
