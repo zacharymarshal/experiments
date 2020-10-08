@@ -18,9 +18,10 @@ export default [
         react: "React",
         "react-dom": "ReactDOM",
         "react-transition-group": "ReactTransitionGroup",
+        "prop-types": "PropTypes",
       },
     },
     plugins: [babel()],
-    external: ["react", "react-dom", "react-transition-group"],
+    external: ["react", "react-dom", "react-transition-group", "prop-types"],
   },
 ];

@@ -6,7 +6,7 @@ import Slot from "./slot";
 export default function ({ counters, add }) {
   const getCounter = (idx) => {
     let isFilled = false;
-    let color = null;
+    let color = "#fff";
     let isRemoved = false;
     if (counters[idx]) {
       const counter = counters[idx];
