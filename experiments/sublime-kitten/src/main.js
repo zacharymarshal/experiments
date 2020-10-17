@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import TenFrame from "./ten_frame";
+import TenFrame from "./components/TenFrame";
 
 function App(props) {
   const [counters, setCounters] = React.useState([[], []]);
@@ -63,8 +63,8 @@ function App(props) {
   return (
     <>
       <div className="tenframe-container">
-        <TenFrame counters={counters[0]} add={addRed} />
-        <TenFrame counters={counters[1]} add={addBlue} />
+        <TenFrame counters={counters[0]} addCounter={addRed} />
+        <TenFrame counters={counters[1]} addCounter={addBlue} />
       </div>
       <button onClick={move}>Move</button>
       &nbsp;
