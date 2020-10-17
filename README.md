@@ -30,3 +30,5 @@ This makes it so docker containers run as your user and not root.
 - [macho-supernova](./experiments/macho-supernova) - GoodReads books to YAML
 - [morose-hound](./experiments/morose-hound) - Build Conway&apos;s game of life using p5.js
 - [shiny-eagle](./experiments/shiny-eagle) - Make a website with tailwind
+- [sublime-kitten](./experiments/sublime-kitten) - ten-frame
+- [wee-omega](./experiments/wee-omega) - js filterbox element
