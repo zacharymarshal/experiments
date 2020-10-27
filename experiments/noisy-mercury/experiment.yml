@@ -1,0 +1,6 @@
+name: noisy-mercury
+description: playing with Nexus and GraphQL
+tools:
+- js
+- nexus
+- graphql
