@@ -1,0 +1,4 @@
+name: daring-sherpa
+description: loading secrets commonjs
+tools:
+- js
