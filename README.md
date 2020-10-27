@@ -26,9 +26,11 @@ This makes it so docker containers run as your user and not root.
 - [benign-cactus](./experiments/benign-cactus) - Experiment with React, Turbolinks and Web Components
 - [blurred-heart](./experiments/blurred-heart) - Recreate the SQLBoss query editor using React
 - [bookish-mice](./experiments/bookish-mice) - Register keybindings to dom elements and dispatch a custom event
+- [daring-sherpa](./experiments/daring-sherpa) - loading secrets commonjs
 - [dark-fog](./experiments/dark-fog) - Send commands between Electron render and main process
 - [macho-supernova](./experiments/macho-supernova) - GoodReads books to YAML
 - [morose-hound](./experiments/morose-hound) - Build Conway&apos;s game of life using p5.js
+- [noisy-mercury](./experiments/noisy-mercury) - playing with Nexus and GraphQL
 - [shiny-eagle](./experiments/shiny-eagle) - Make a website with tailwind
 - [sublime-kitten](./experiments/sublime-kitten) - ten-frame
 - [wee-omega](./experiments/wee-omega) - js filterbox element
