@@ -33,4 +33,5 @@ This makes it so docker containers run as your user and not root.
 - [noisy-mercury](./experiments/noisy-mercury) - playing with Nexus and GraphQL
 - [shiny-eagle](./experiments/shiny-eagle) - Make a website with tailwind
 - [sublime-kitten](./experiments/sublime-kitten) - ten-frame
+- [swift-actor](./experiments/swift-actor) - elasticsearch url tokenizer
 - [wee-omega](./experiments/wee-omega) - js filterbox element

@@ -1,0 +1,40 @@
+{
+  "settings": {
+    "analysis": {
+      "tokenizer": {
+        "url_tokenizer": {
+          "type": "simple_pattern",
+          "pattern": "[^/&?\\.]*"
+        }
+      },
+      "filter": {
+        "length_gt_3": {
+          "type": "length",
+          "min": "3"
+        },
+        "url_stop_words": {
+          "type": "stop",
+          "stopwords": ["_english_"]
+        }
+      },
+      "analyzer": {
+        "url_analyzer": {
+          "tokenizer": "url_tokenizer",
+          "filter": [
+            "lowercase",
+            "length_gt_3",
+            "url_stop_words"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "text": {
+        "type": "text",
+        "analyzer": "url_analyzer"
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+name: swift-actor
+description: elasticsearch url tokenizer
+tools:
+- elasticsearch
