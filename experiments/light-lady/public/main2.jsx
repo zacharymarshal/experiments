@@ -5,99 +5,114 @@
 // - Handle errors from the api
 // - Handle no data from the api (nice message saying no data)
 const { BrowserRouter: Router, Link, Route, Switch, useHistory, useLocation } = ReactRouterDOM;
-const { useEffect, useState, useRef, Fragment } = React;
+const { useEffect, useState, useRef, useReducer, Fragment } = React;
 
-function Results({ error, results, display }) {
-  if (!display) {
-    return "";
+const defaultState = {
+  isLoading: false,
+  isError: false,
+  data: [],
+  dataLoaded: false,
+};
+const getResultsReducer = (state, action) => {
+  switch (action.type) {
+    case "init":
+      return {
+        ...defaultState,
+        isLoading: true,
+      };
+    case "success":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload,
+        dataLoaded: true,
+      };
+    case "failed":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        data: [],
+        dataLoaded: false,
+      };
+    default:
+      throw new Error();
   }
+};
 
-  const hasError = !!error.message;
+const useApi = () => {
+  const [params, setParams] = useState([]);
 
-  return (
-    <Fragment>
-      <h2>Results</h2>
+  const [state, dispatch] = useReducer(getResultsReducer, defaultState);
 
-      {(hasError &&
-        <div style={{ color: "red" }}>{error.message}</div>
-      )}
-
-      {(!hasError && results.length === 0 &&
-        <div style={{ color: "orange" }}>No results found</div>
-      )}
-
-      {results.map((r, idx) => (
-        <div key={idx}>{r.name}</div>
-      ))}
-    </Fragment>
-  );
-}
-
-function FormPage({ history, location }) {
-  const [name, setName] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const [results, setResults] = useState(null);
-  const [resultsError, setResultsError] = useState({});
-
-  const nameRef = useRef();
-
-  const fetchResults = (name, { abortController }) => {
-    console.log(`fetching data...${name}`);
-
-    fetch(`/api?name=${name}`, { signal: abortController.signal })
-      .then((res) => {
-        if (res.status !== 200) {
-          throw Error("request failed");
-        }
-        return res.json();
-      })
-      .then((results) => {
-        setResults(results);
-        setResultsError({});
-        setIsSubmitting(false);
-      })
-      .catch((err) => {
-        if (err.name === "AbortError") {
-          console.log("aborted!");
-        } else {
-          setResults([]);
-          setResultsError({ message: "request failed!", err });
-          setIsSubmitting(false);
-        }
-      });
-  };
+  const abortController = new AbortController();
 
   useEffect(() => {
-    nameRef.current.focus();
-
-    const abortController = new AbortController();
-
-    const p = new URLSearchParams(location.search);
-
-    setName(p.get("name") || "");
-
-    if (p.get("submitted") === "t") {
-      console.log("is submitting");
-      setIsSubmitting(true);
-      fetchResults(p.get("name"), { abortController });
+    if (params.length === 0) {
+      return;
     }
+
+    let didUnmount = false;
+    const searchParams = new URLSearchParams(params);
+    const fetchData = async () => {
+      try {
+        dispatch({ type: "init" });
+        const res = await fetch(`/api?${searchParams.toString()}`, { signal: abortController.signal });
+        if (res.status !== 200) {
+          throw new Error();
+        }
+        const data = await res.json();
+        if (!didUnmount) {
+          dispatch({ type: "success", payload: data });
+        }
+      } catch (err) {
+        if (!didUnmount) {
+          dispatch({ type: 'failed' });
+        }
+      }
+    };
+
+    fetchData();
+
     return () => {
-      setIsSubmitting(false);
-      setResults(null);
-      setResultsError({});
+      didUnmount = true;
       abortController.abort();
     };
+  }, [params]);
+
+  return [state, setParams];
+};
+
+function ReportPage({ history, location }) {
+  const [api, fetchData] = useApi();
+
+  const [name, setName] = useState("");
+  const dataRef = useRef();
+
+  useEffect(() => {
+    if (api.isLoading || !api.dataLoaded || !dataRef.current) {
+      return;
+    }
+    console.log("scrolling");
+    dataRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [api.isLoading]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    setName(searchParams.get("name") || "");
+
+    if (searchParams.get("submitted") === "t") {
+      fetchData(searchParams.entries());
+    }
   }, [location]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (isSubmitting) {
+    if (api.isLoading) {
       return;
     }
-
-    setIsSubmitting(true);
 
     const q = new URLSearchParams({
       name,
@@ -108,13 +123,25 @@ function FormPage({ history, location }) {
 
   return (
     <Fragment>
-      <h1>Hello form page!</h1>
-
       <form onSubmit={handleSubmit}>
-        <input type="text" ref={nameRef} onChange={(e) => setName(e.target.value)} value={name} autoFocus />
-        <input type="submit" value={isSubmitting ? "..." : "Go!"} />
-
-        <Results error={resultsError} results={results} display={results !== null}/>
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <button type="submit">{api.isLoading ? "..." : (<Fragment>Go &rarr;</Fragment>)}</button>
+        <hr/>
+        {api.isLoading && <div>Loading...</div>}
+        {api.isError && (
+          <div style={{ color: "red" }}>Something bad happened...</div>
+        )}
+        {api.dataLoaded && (
+          <Fragment>
+            <h2 ref={dataRef}>Data</h2>
+            {api.data.map((d, idx) => (
+              <div key={idx}>{d.name}</div>
+            ))}
+            {api.data.length === 0 && (
+              <div style={{ color: "orange" }}>No data found...</div>
+            )}
+          </Fragment>
+        )}
       </form>
     </Fragment>
   );
@@ -126,7 +153,7 @@ function App() {
       <Link to="/">Home</Link>
       <Link to="/about">About</Link>
       <Switch>
-        <Route path="/" exact component={FormPage} />
+        <Route path="/" exact component={ReportPage}/>
         <Route path="/about" exact>
           <h1>Hello about us!</h1>
         </Route>

@@ -26,7 +26,7 @@ app.get("/api", async (req, res) => {
     return;
   }
 
-  res.json([...new Array(20)].map(() => ({
+  res.json([...new Array(100)].map(() => ({
     name,
   })));
 });
