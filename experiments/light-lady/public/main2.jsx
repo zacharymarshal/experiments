@@ -34,7 +34,7 @@ const getResultsReducer = (state, action) => {
         isLoading: false,
         isError: true,
         data: [],
-        dataLoaded: false,
+        dataLoaded: true,
       };
     default:
       throw new Error();
@@ -84,65 +84,67 @@ const useApi = () => {
   return [state, setParams];
 };
 
+function Form({ name: initialName, isLoading, onSubmit }) {
+  const [name, setName] = useState(initialName);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (isLoading) {
+      return;
+    }
+
+    onSubmit({
+      name,
+      submitted: Date.now(),
+    });
+  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      <button type="submit">{isLoading ? "..." : (<Fragment>Go &rarr;</Fragment>)}</button>
+    </form>
+  );
+}
+
 function ReportPage({ history, location }) {
   const [api, fetchData] = useApi();
 
-  const [name, setName] = useState("");
-  const dataRef = useRef();
+  const q = new URLSearchParams(location.search);
+  const name = q.get('name') || '';
+  const submitted = q.get('submitted');
 
   useEffect(() => {
-    if (api.isLoading || !api.dataLoaded || !dataRef.current) {
-      return;
-    }
-    console.log("scrolling");
-    dataRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [api.isLoading]);
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    setName(searchParams.get("name") || "");
-
-    if (searchParams.get("submitted") === "t") {
-      fetchData(searchParams.entries());
-    }
-  }, [location]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (api.isLoading) {
+    if (!submitted) {
       return;
     }
 
-    const q = new URLSearchParams({
-      name,
-      submitted: 't',
-    });
-    history.push(`?${q}`);
-  };
+    fetchData({ name });
+  }, [name, submitted]);
+
+  function onSubmit(formData) {
+    const url = `?${new URLSearchParams(formData)}`;
+    history.push(url);
+  }
 
   return (
     <Fragment>
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        <button type="submit">{api.isLoading ? "..." : (<Fragment>Go &rarr;</Fragment>)}</button>
-        <hr/>
-        {api.isLoading && <div>Loading...</div>}
-        {api.isError && (
-          <div style={{ color: "red" }}>Something bad happened...</div>
-        )}
-        {api.dataLoaded && (
-          <Fragment>
-            <h2 ref={dataRef}>Data</h2>
-            {api.data.map((d, idx) => (
-              <div key={idx}>{d.name}</div>
-            ))}
-            {api.data.length === 0 && (
-              <div style={{ color: "orange" }}>No data found...</div>
-            )}
-          </Fragment>
-        )}
-      </form>
+      <Form name={name} onSubmit={onSubmit} isLoading={api.isLoading} />
+      {api.dataLoaded && <hr />}
+      {api.isError && (
+        <div style={{ color: "red" }}>Something bad happened...</div>
+      )}
+      {api.dataLoaded && !api.isError && (
+        <Fragment>
+          <h2>Data</h2>
+          {api.data.map((d, idx) => (
+            <div key={idx}>{d.name}</div>
+          ))}
+          {api.data.length === 0 && (
+            <div style={{ color: "orange" }}>No data found...</div>
+          )}
+        </Fragment>
+      )}
     </Fragment>
   );
 }
