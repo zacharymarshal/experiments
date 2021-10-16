@@ -34,4 +34,5 @@ This makes it so docker containers run as your user and not root.
 - [shiny-eagle](./experiments/shiny-eagle) - Make a website with tailwind
 - [sublime-kitten](./experiments/sublime-kitten) - ten-frame
 - [swift-actor](./experiments/swift-actor) - elasticsearch url tokenizer
+- [warmup-api](./experiments/warmup-api) - warmup with a simple web api
 - [wee-omega](./experiments/wee-omega) - js filterbox element

@@ -1,0 +1,14 @@
+{
+  "main": "src/main.js",
+  "scripts": {
+    "fmt": "prettier --write ."
+  },
+  "dependencies": {
+    "arg": "^5.0.1",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.13"
+  },
+  "devDependencies": {
+    "prettier": "^2.4.1"
+  }
+}
