@@ -14,7 +14,7 @@
     "mousetrap": "^1.6.5"
   },
   "devDependencies": {
-    "electron": "^8",
+    "electron": "^15",
     "electron-packager": "^15.0.0"
   }
 }
