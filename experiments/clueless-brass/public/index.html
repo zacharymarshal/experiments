@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      #sprite {
+        background: url("prius-sprite.png");
+        background-position-x: 0;
+        width: 640px;
+        height: 480px;
+        /* scaled down on mobile */
+        transform: translate(-25%, -25%) scale(0.5);
+      }
+
+      #sprite.infinite {
+        /* steps = `numImages` */
+        animation: infinite-sprite 4s steps(36) infinite;
+      }
+
+      @keyframes infinite-sprite {
+        to {
+          /* `width * numImages` */
+          background-position-x: -23040px;
+        }
+      }
+
+      @media only screen and (min-width: 1024px) {
+        #sprite {
+          /* scaled up on desktop */
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- max = `width * (numImages - 1)` -->
+    <!-- step = `width` -->
+    <input
+      type="range"
+      min="0"
+      max="22400"
+      value="0"
+      class="slider"
+      step="640"
+      id="slider"
+    />
+    <button id="loop">Loop</button>
+    <div id="sprite"></div>
+
+    <h1>How To</h1>
+    <p>
+      <ul>
+        <li>Used this <a href="https://spritegen.website-performance.org/">Sprite Generator</a>.
+          Upload all of your images and then set the "compressed" setting and "gap" to 0.</li>
+        <li>Use <a href="https://tinypng.com/">TinyPNG</a> to compress your final image sprite.</li>
+      </ul>
+    </p>
+    <p>Not the most optimized solution but pretty simple to implement. One thing to consider would be
+    having separate images that you can have the browser preload before you show them.</p>
+
+    <script>
+      const sprite = document.getElementById("sprite");
+      document.getElementById("slider").addEventListener("input", (e) => {
+        sprite.style.backgroundPositionX = `-${e.target.value}px`;
+        sprite.classList.remove("infinite");
+      });
+      document.getElementById("loop").addEventListener("click", (e) => {
+        sprite.style.backgroundPositionX = "0";
+        sprite.classList.toggle("infinite");
+      });
+    </script>
+  </body>
+</html>

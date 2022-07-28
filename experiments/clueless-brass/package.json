@@ -1,0 +1,16 @@
+{
+  "name": "clueless-brass",
+  "version": "1.0.0",
+  "description": "sprite controller",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.20.0",
+    "eslint-plugin-react": "^7.30.1",
+    "prettier": "^2.7.1"
+  }
+}
