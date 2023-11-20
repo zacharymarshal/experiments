@@ -1,0 +1,14 @@
+{
+  "name": "viral-eyes",
+  "version": "1.0.0",
+  "description": "docusign node",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node --env-file=.env src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "docusign-esign": "^6.5.0"
+  }
+}
